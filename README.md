@@ -13,6 +13,8 @@ There are 4 cast types need to master
 		> Pointer to pointer of unrelated types
 		> Pointer to integer
 		> *** Dangerous***
+	# A simple concept that make Pointer -> Number-> Pointer
+
 
 ### const_cast
 	# This cast is the only one that can remove or add ***cast***
@@ -24,3 +26,42 @@ There are 4 cast types need to master
 		> Returns nullptr(pointer) or throws std::bad_cast(references) when fail
 		> Only cast that is runtime-safe for downcasting
 
+
+		Sending Data Over Network**
+	```
+	C++ Object (in memory):
+	struct Person {
+		std::string name = "Alice";
+		int age = 30;
+	}
+
+	↓ SERIALIZE ↓
+
+	JSON string (can be sent over internet):
+	{"name":"Alice","age":30}
+
+	↓ DESERIALIZE ↓
+
+	C++ Object (reconstructed on another computer):
+	struct Person {
+		std::string name = "Alice";
+		int age = 30;
+	}
+ In THIS Exercise (Ex01)**
+
+**Your specific case:**
+	```
+	Data Object (in memory):
+	Address: 0x7fff5fbff710 ← This is a POINTER
+	Content: { value: 42, str: "Hello" }
+
+	↓ SERIALIZE ↓
+
+	Number (can be stored/transmitted):
+	140734799737616  ← The pointer converted to a number!
+
+	↓ DESERIALIZE ↓
+
+	Pointer (reconstructed):
+	Address: 0x7fff5fbff710 ← Same pointer!
+	Content: { value: 42, str: "Hello" }
