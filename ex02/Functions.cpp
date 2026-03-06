@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Functions.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhabin- <muhabin-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: muhabin- <muhabin-@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 22:57:32 by muhabin-          #+#    #+#             */
-/*   Updated: 2026/03/05 23:22:54 by muhabin-         ###   ########.fr       */
+/*   Updated: 2026/03/06 11:10:41 by muhabin-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void identify(Base& p)
 		std::cout<< "A"<< std::endl;
 		return;
 	}
-	catch(const std::bad_cast&){}
+	catch(const std::exception&){}
 
 	try
 	{
@@ -58,14 +58,14 @@ void identify(Base& p)
 		std::cout<< "B"<< std::endl;
 		return;
 	}
-	catch(const std::bad_cast){}
+	catch(const std::exception&){}
 
 	try
 	{
 		(void)dynamic_cast<C&>(p);
 		std::cout<<"C"<<std::endl;
 	}
-	catch(const std::bad_cast){}
+	catch(const std::exception&){}
 
 
 }
