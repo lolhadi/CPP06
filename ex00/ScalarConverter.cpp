@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ScalarConverter.cpp                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: muhabin- <muhabin-@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/04 16:03:04 by muhabin-          #+#    #+#             */
-/*   Updated: 2026/03/05 16:00:29 by muhabin-         ###   ########.fr       */
-/*                                                                            */
+/*																		    */
+/*														:::      ::::::::   */
+/*   ScalarConverter.cpp								:+:      :+:    :+:   */
+/*												    +:+ +:+		 +:+     */
+/*   By: muhabin- <muhabin-@student.42.fr>		  +#+  +:+       +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2026/03/04 16:03:04 by muhabin-		  #+#    #+#		     */
+/*   Updated: 2026/03/06 19:09:12 by muhabin-		 ###   ########.fr       */
+/*																		    */
 /* ************************************************************************** */
 
 #include "ScalarConverter.hpp"
@@ -48,7 +48,7 @@ bool ScalarConverter::isChar(std::string const &str)
 	// IF the length of string is equal to 3 and the index of 0 and 2 is ' then its true
 	if (str.length() == 3 && str[0] == '\'' && str[2] == '\'')
 		return true;
-	if (str.length() == 1 && std::isprint(str[0]))
+	if (str.length() == 1 && std::isprint(str[0]) && !std::isdigit(str[0]))
 		return true;
 	return false;
 }
@@ -107,12 +107,26 @@ bool ScalarConverter::isDouble(std::string const &str)
 
 void ScalarConverter::convertFromInt(std::string const &str)
 {
-	// parse string into int
-	int value = std::atoi(str.c_str());
+	// parse string as double first to avoid overflow
+	double temp = std::strtod(str.c_str(), NULL);
 
+	// Check if it fits in int range
+	if (temp < std::numeric_limits<int>::min() || temp > std::numeric_limits<int>::max())
+	{
+		// Number too big/small for int!
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << std::fixed << std::setprecision(1);
+		std::cout << "float: " << static_cast<float>(temp) << "f" << std::endl;
+		std::cout << "double: " << temp << std::endl;
+		return;
+	}
+
+	// IF EVERYTING IS FINE SAFE TO CONVERT LIKE NORMAL
+
+	int value = static_cast<int>(temp);
 	// Convert the int into all 4 types
 	char c = static_cast<char>(value);
-	int i = value;
 	float f = static_cast<float>(value);
 	double d = static_cast<double>(value);
 
@@ -124,7 +138,7 @@ void ScalarConverter::convertFromInt(std::string const &str)
 		std::cout<< "Non displayable" << std::endl;
 	else
 		std::cout<< "'" << c << "'" << std::endl;
-	std::cout << "int: " << i << std::endl;
+	std::cout << "int: " << value << std::endl;
 	std::cout << std::fixed << std::setprecision(1);
 	std::cout << "float: " << f << "f" << std::endl;
 	std::cout << "double: " << d << std::endl;
